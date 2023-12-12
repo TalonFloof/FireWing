@@ -49,10 +49,10 @@ minetest.register_biome({
 	--node_water_top = "",
 	--depth_water_top = ,
 	--node_water = "",
-	y_min = 2,
+	y_min = 3,
 	y_max = 31000,
 	heat_point = 50,
-	humidity_point = 35,
+	humidity_point = 24,
 })
 minetest.register_biome({
 	name = "Grasslands Ocean",
@@ -66,9 +66,42 @@ minetest.register_biome({
 	--depth_water_top = ,
 	--node_water = "",
 	y_min = -31000,
-	y_max = 2,
+	y_max = 3,
 	heat_point = 50,
-	humidity_point = 35,
+	humidity_point = 24,
+})
+
+minetest.register_biome({
+	name = "Lush Grasslands",
+	--node_dust = "",
+	node_top = "default:dirt_with_grass",
+	depth_top = 1,
+	node_filler = "default:dirt",
+	depth_filler = 1,
+	--node_stone = "",
+	--node_water_top = "",
+	--depth_water_top = ,
+	--node_water = "",
+	y_min = 3,
+	y_max = 31000,
+	heat_point = 50,
+    humidity_point = 50,
+})
+minetest.register_biome({
+	name = "Lush Grasslands Ocean",
+	--node_dust = "",
+	node_top = "default:sand",
+	depth_top = 1,
+	node_filler = "default:sand",
+	depth_filler = 2,
+	--node_stone = "",
+	--node_water_top = "",
+	--depth_water_top = ,
+	--node_water = "",
+	y_min = -31000,
+	y_max = 3,
+	heat_point = 50,
+    humidity_point = 50,
 })
 
 minetest.register_biome({
@@ -115,7 +148,7 @@ minetest.register_biome({
 	--node_water_top = "",
 	--depth_water_top = ,
 	--node_water = "",
-	y_min = 2,
+	y_min = 3,
 	y_max = 31000,
 	heat_point = 60,
 	humidity_point = 68,
@@ -132,7 +165,7 @@ minetest.register_biome({
 	--depth_water_top = ,
 	--node_water = "",
 	y_min = -31000,
-	y_max = 2,
+	y_max = 3,
 	heat_point = 60,
 	humidity_point = 68,
 })
@@ -144,7 +177,7 @@ minetest.register_biome({
 	node_filler = "default:sand",
 	depth_filler = 3,
 	y_max = 31000,
-	y_min = 2,
+	y_min = 3,
 	heat_point = 92,
 	humidity_point = 16,
 })
@@ -160,7 +193,7 @@ minetest.register_biome({
 	--depth_water_top = ,
 	--node_water = "",
 	y_min = -31000,
-	y_max = 2,
+	y_max = 3,
 	heat_point = 92,
 	humidity_point = 16,
 })
@@ -171,27 +204,27 @@ minetest.register_biome({
 	depth_top = 1,
 	node_filler = "default:dirt",
 	depth_filler = 1,
-	node_riverbed = "default:sand",
+	node_riverbed = "default:gravel",
 	depth_riverbed = 2,
 	y_max = 31000,
-	y_min = 2,
-	heat_point = 20,
+	y_min = 3,
+	heat_point = 0,
 	humidity_point = 35,
 })
 minetest.register_biome({
 	name = "Tundra Ocean",
 	--node_dust = "",
-	node_top = "default:sand",
+	node_top = "default:gravel",
 	depth_top = 1,
-	node_filler = "default:sand",
+	node_filler = "default:gravel",
 	depth_filler = 2,
 	--node_stone = "",
 	--node_water_top = "",
 	--depth_water_top = ,
 	--node_water = "",
 	y_min = -31000,
-	y_max = 2,
-	heat_point = 20,
+	y_max = 3,
+	heat_point = 0,
 	humidity_point = 35,
 })
 
@@ -201,26 +234,26 @@ minetest.register_biome({
 	depth_top = 1,
 	node_filler = "default:dirt",
 	depth_filler = 3,
-	node_riverbed = "default:sand",
+	node_riverbed = "default:gravel",
 	depth_riverbed = 2,
 	y_max = 31000,
-	y_min = 2,
+	y_min = 3,
 	heat_point = 25,
 	humidity_point = 70,
 })
 minetest.register_biome({
 	name = "Taiga Ocean",
 	--node_dust = "",
-	node_top = "default:sand",
+	node_top = "default:gravel",
 	depth_top = 1,
-	node_filler = "default:sand",
+	node_filler = "default:gravel",
 	depth_filler = 2,
 	--node_stone = "",
 	--node_water_top = "",
 	--depth_water_top = ,
 	--node_water = "",
 	y_min = -31000,
-	y_max = 2,
+	y_max = 3,
 	heat_point = 25,
 	humidity_point = 70,
 })
@@ -249,6 +282,20 @@ minetest.register_decoration(
 minetest.register_decoration(
    {
       deco_type = "schematic",
+      place_on = {"default:dirt_with_grass"},
+      sidelen = 16,
+      fill_ratio = 0.002,
+      biomes = {"Lush Grasslands"},
+      flags = "place_center_x, place_center_z, force_placement",
+      schematic = minetest.get_modpath("default")
+         .. "/schematics/Tree2.mts",
+      y_min = default.GLOBAL_Y_MIN,
+      y_max = default.GLOBAL_Y_MAX,
+})
+
+minetest.register_decoration(
+   {
+      deco_type = "schematic",
       place_on = {"default:dirt_with_grass", "default:dirt_with_snow"},
       sidelen = 16,
       noise_params = {
@@ -267,13 +314,27 @@ minetest.register_decoration(
       y_max = default.GLOBAL_Y_MAX,
 })
 
+minetest.register_decoration(
+   {
+      deco_type = "schematic",
+      place_on = {"default:dirt_with_grass", "default:dirt_with_snow"},
+      sidelen = 16,
+      fill_ratio = 0.008,
+      biomes = {"Taiga"},
+      flags = "place_center_x, place_center_z, force_placement",
+      schematic = minetest.get_modpath("default")
+         .. "/schematics/Tree1.mts",
+      y_min = default.GLOBAL_Y_MIN,
+      y_max = default.GLOBAL_Y_MAX,
+})
+
 minetest.register_decoration({
 	name = "default:bush",
 	deco_type = "schematic",
 	place_on = {"default:dirt_with_grass"},
 	sidelen = 16,
 	fill_ratio = 0.006,
-	biomes = {"Grasslands", "Deciduous Forest"},
+	biomes = {"Grasslands", "Lush Grasslands", "Deciduous Forest"},
 	y_max = 31000,
 	y_min = 1,
 	schematic = minetest.get_modpath("default") .. "/schematics/Bush1.mts",

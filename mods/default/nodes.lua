@@ -20,11 +20,9 @@ end
 function default.node_sound_dirt_defaults(table)
 	table = table or {}
 	table.footstep = table.footstep or
-			{name="default_dirt_footstep", gain=0.5}
+			{name="default_dirt_footstep", gain=1.0}
 	table.dig = table.dig or
-			{name="default_dig_crumbly", gain=0.5}
-	table.dug = table.dug or
-		{name="default_dirt_footstep", gain=1.0}
+			{name="default_dig_crumbly", gain=1.0}
 	default.node_sound_defaults(table)
 	return table
 end
@@ -32,9 +30,9 @@ end
 function default.node_sound_grass_defaults(table)
 	table = table or {}
 	table.footstep = table.footstep or
-			{name="default_grass_footstep", gain=0.5}
+			{name="default_grass_footstep", gain=1.0}
 	table.dig = table.dig or
-		{name="default_dig_crumbly", gain=0.5}
+		{name="default_dig_crumbly", gain=1.0}
 	default.node_sound_defaults(table)
 	return table
 end
@@ -44,8 +42,6 @@ function default.node_sound_sand_defaults(table)
 	table.footstep = table.footstep or
 			{name="default_sand_footstep", gain=0.5}
 	table.dig = table.dig or
-		{name="default_sand_footstep", gain=0.5}
-	table.dug = table.dug or
 		{name="default_sand_footstep", gain=0.5}
 	default.node_sound_defaults(table)
 	return table
@@ -67,7 +63,7 @@ function default.node_sound_water_defaults(table)
 	table = table or {}
 	table.footstep = table.footstep or
 			{name="default_hard_footstep", gain=0.3}
-	table.dig = table.dig or {name="default_dig_choppy", gain = 0.5}
+	table.dig = table.dig or {name="default_dig_choppy", gain = 1.0}
 	table.place = table.place or {name="default_place_node_hard"}
 	default.node_sound_defaults(table)
 	return table
@@ -78,7 +74,7 @@ function default.node_sound_leaves_defaults(table)
 	table.footstep = table.footstep or
 			{name="default_grass_footstep", gain=0.25}
 	table.dig = table.dig or
-			{name="default_dig_crumbly", gain=0.4}
+			{name="default_dig_crumbly", gain=1.0}
 	table.dug = table.dug or
 			{name="", gain=1.0}
 	default.node_sound_defaults(table)
@@ -143,6 +139,13 @@ minetest.register_node("default:dirt_with_snow", {
 minetest.register_node("default:sand", {
 	description = "Sand",
 	tiles ={"default_sand.png"},
+	groups = {crumbly=3, falling_node=1},
+	sounds = default.node_sound_sand_defaults({}),
+})
+
+minetest.register_node("default:gravel", {
+	description = "Gravel",
+	tiles ={"default_gravel.png"},
 	groups = {crumbly=3, falling_node=1},
 	sounds = default.node_sound_sand_defaults({}),
 })
@@ -255,7 +258,6 @@ minetest.register_node("default:tree", {
 minetest.register_node("default:leaves", {
 	description = "Leaves",
 	drawtype = "allfaces_optional",
-	visual_scale = 1.3,
 	tiles ={"default_leaves.png"},
 	paramtype = "light",
 	is_ground_content = false,
@@ -290,7 +292,7 @@ minetest.register_node("default:mangrove_tree", {
 minetest.register_node("default:mangrove_leaves", {
 	description = "Mangrove Leaves",
 	drawtype = "allfaces_optional",
-	visual_scale = 1.3,
+	visual_scale = 1,
 	tiles ={"default_mangrove_leaves.png"},
 	paramtype = "light",
 	is_ground_content = false,
@@ -321,14 +323,13 @@ minetest.register_node("default:bush_stem", {
     buildable_to = false,
     floodable = true,
 	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=1,tree=1},
-	visual_scale = 1.41,
+	visual_scale = 1,
 	sounds = default.node_sound_wood_defaults(),
 })
 
 minetest.register_node("default:bush_leaves", {
 	description = "Bush Leaves",
 	drawtype = "allfaces_optional",
-	visual_scale = 1.3,
 	tiles ={"default_bush_leaves.png"},
 	paramtype = "light",
 	is_ground_content = false,
