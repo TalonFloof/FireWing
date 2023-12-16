@@ -1,12 +1,13 @@
 local event = {}
-event.name = "light_clouds"
+event.name = "medium_clouds"
 event.clouds = {
-    density = 0.25,
+    density = 0.4,
     height = 300-16,
     thickness = 32,
 }
 event.eventChain = {
-    {"clear",0.1},
-    {"medium_clouds",0.3}
+    {"overcast",0.06},
+    {"sprinkle",0.3},
+    {"light_clouds",0.1},
 }
 weather.register_event(event)

@@ -352,3 +352,13 @@ minetest.register_node("default:bush_leaves", {
 	},
 	sounds = default.node_sound_leaves_defaults(),
 })
+
+minetest.register_node("default:wood", {
+	description = "Wood",
+	tiles ={"default_wood.png"},
+	is_ground_content = false,
+	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=1},
+	sounds = default.node_sound_wood_defaults(),
+})
+
+default.register_recipe({"group:tree 1"},"default:wood 4")
