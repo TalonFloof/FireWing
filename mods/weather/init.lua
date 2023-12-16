@@ -10,5 +10,6 @@ minetest.register_globalstep(function(t)
 end)
 
 function weather.register_event(event)
-    
+    table.insert(weather.events,event)
 end
+
