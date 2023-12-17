@@ -6,12 +6,6 @@ event.clouds = {
     height = 300-24,
     thickness = 40,
 }
-event.moon = {
-	visible = true,
-	texture = "moon.png",
-	tonemap = "moon_tonemap.png",
-	scale = 0.5
-}
 event.sky = {
 	type = "regular",
 	clouds = true,
@@ -27,20 +21,6 @@ event.sky = {
 		--fog_moon_tint = "#C5C9C9",
 		--fog_tint_type = "custom"
 	}
-}
-event.sun = {
-	visible = true,
-	texture = "sun.png",
-	tonemap = "sun_tonemap.png",
-	sunrise = "sunrisebg.png",
-	sunrise_visible = true,
-	scale = 0.4
-}
-
-event.stars = {
-	visible = true,
-	count = 1000,
-	color = "#80FCFEFF"
 }
 event.eventChain = {
     {"sprinkle",0.25},

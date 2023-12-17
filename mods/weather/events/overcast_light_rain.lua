@@ -72,8 +72,8 @@ event.particle = function(player)
 end
 event.loop = "light_rain_loop"
 event.eventChain = {
-    {"light_rain",0.25},
     {"overcast",0.5},
     {"overcast_medium_rain",0.5},
+    {"light_rain",0.25},
 }
 weather.register_event(event)

@@ -25,6 +25,7 @@ dofile(path.."/events/medium_clouds.lua")
 dofile(path.."/events/sprinkle.lua")
 dofile(path.."/events/light_rain.lua")
 dofile(path.."/events/overcast.lua")
+dofile(path.."/events/fog.lua")
 dofile(path.."/events/overcast_light_rain.lua")
 dofile(path.."/events/overcast_medium_rain.lua")
 dofile(path.."/events/overcast_heavy_rain.lua")
@@ -35,40 +36,48 @@ local function lerp(a,b,t)
     return (b-a)*math.min(1.0,t)+a
 end
 
+local function switchWeatherEvent(name)
+    if name ~= nil then
+        weather.previous_condition = weather.active_condition
+        weather.active_condition = weather.events[name]
+        weather.time_left = 90 + math.random(-30,30)
+    elseif weather.active_condition == nil then
+        weather.previous_condition = weather.events["medium_clouds"]
+        weather.active_condition = weather.events["overcast"]
+        weather.time_left = 90 + math.random(-30,30)
+    else
+        weather.previous_condition = weather.active_condition
+        for _,i in ipairs(weather.active_condition.eventChain) do
+            if math.random() <= i[2] then
+                weather.active_condition = weather.events[i[1]]
+                break
+            end
+        end
+        weather.time_left = 90 + math.random(-30,30)
+    end
+    weather.transition_left = 5
+    minetest.chat_send_all("New Weather Event is "..weather.active_condition.name.." for "..weather.time_left.."s")
+    if weather.active_condition.loop ~= nil then
+        for _,player in ipairs(minetest.get_connected_players()) do
+            if weather.sounds[player:get_player_name()] ~= nil and weather.sounds_event[player:get_player_name()] ~= weather.active_condition.name then
+                minetest.sound_fade(weather.sounds[player:get_player_name()],2,0)
+                weather.sounds[player:get_player_name()] = nil
+                weather.sounds_event[player:get_player_name()] = nil
+            end
+        end
+    end
+end
+
 minetest.register_globalstep(function(t)
     weather.time_left = weather.time_left - t
     if weather.time_left <= 0 then
-        if weather.active_condition == nil then
-            weather.previous_condition = weather.events["medium_clouds"]
-            weather.active_condition = weather.events["medium_clouds"]
-            weather.time_left = 90 + math.random(-30,30)
-        else
-            weather.previous_condition = weather.active_condition
-            for _,i in ipairs(weather.active_condition.eventChain) do
-                if math.random() <= i[2] then
-                    weather.active_condition = weather.events[i[1]]
-                    break
-                end
-            end
-            weather.time_left = 90 + math.random(-30,30)
-        end
-        weather.transition_left = 5
-        minetest.chat_send_all("New Weather Event is "..weather.active_condition.name.." for "..weather.time_left.."s")
-        if weather.active_condition.loop ~= nil then
-            for _,player in ipairs(minetest.get_connected_players()) do
-                if weather.sounds[player:get_player_name()] ~= nil and weather.sounds_event[player:get_player_name()] ~= weather.active_condition.name then
-                    minetest.sound_fade(weather.sounds[player:get_player_name()],2,0)
-                    weather.sounds[player:get_player_name()] = nil
-                    weather.sounds_event[player:get_player_name()] = nil
-                end
-            end
-        end
+        switchWeatherEvent()
     end
     for _,player in ipairs(minetest.get_connected_players()) do
         if weather.transition_left >= 0 then
             weather.transition_left = weather.transition_left - t
             local final = {
-                color = weather.active_condition.clouds.color,
+                color = weather.active_condition.clouds.color or "#fff0f0e5",
                 density = lerp(weather.previous_condition.clouds.density,weather.active_condition.clouds.density,(5.0-weather.transition_left)/5.0),
                 height = (lerp(weather.previous_condition.clouds.height,weather.active_condition.clouds.height,(5.0-weather.transition_left)/5.0)),
                 thickness = (lerp(weather.previous_condition.clouds.thickness,weather.active_condition.clouds.thickness,(5.0-weather.transition_left)/5.0))
@@ -117,5 +126,13 @@ minetest.register_chatcommand("progress_weather", {
     description = "Progresses to the next Weather Event within the Markov Chain",
     func = function(name)
         weather.time_left = 0
+    end
+})
+
+minetest.register_chatcommand("set_weather", {
+    params = "<weather_event>",
+    description = "Sets the Weather Event to the specified one",
+    func = function(name,params)
+        switchWeatherEvent(params)
     end
 })

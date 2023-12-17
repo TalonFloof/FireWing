@@ -81,6 +81,15 @@ function default.node_sound_leaves_defaults(table)
 	return table
 end
 
+function default.node_sound_small_defaults(table)
+	table = table or {}
+	table.place = table.place or {name="default_place_smallnode", gain=1.0}
+	table.dig = table.dig or {name="default_dig_smallnode", gain=1.0}
+	table.dug = table.dug or {name="default_dug_smallnode", gain=1.0}
+	default.node_sound_defaults(table)
+	return table
+end
+
 minetest.register_node("default:stone", {
 	description = "Stone",
 	tiles ={"default_stone.png"},
@@ -261,7 +270,7 @@ minetest.register_node("default:leaves", {
 	tiles ={"default_leaves.png"},
 	paramtype = "light",
 	is_ground_content = false,
-	groups = {snappy=3,leafdecay=1},
+	groups = {snappy=3,leafdecay=3},
 	waving = 1,
 	drop = {
 		max_items = 1,
@@ -281,6 +290,38 @@ minetest.register_node("default:leaves", {
 	sounds = default.node_sound_leaves_defaults(),
 })
 
+minetest.register_node(
+   "default:sapling",
+   {
+      description = "Sapling",
+      drawtype = "plantlike",
+      tiles = {"default_sapling.png"},
+      inventory_image = "default_sapling_inventory.png",
+      wield_image = "default_sapling_inventory.png",
+      paramtype = "light",
+      sunlight_propagates = true,
+      walkable = false,
+      floodable = true,
+      selection_box = {
+	 type = "fixed",
+	 fixed = {-0.4, -0.5, -0.4, 0.4, 0.4, 0.4},
+      },
+      groups = {snappy = 2, dig_immediate = 3, leafdecay_drop=1},
+      is_ground_content = false,
+      sounds = default.node_sound_wood_defaults({}),
+
+      on_timer = function(pos)
+         default.grow_sapling(pos)
+      end,
+
+      on_construct = function(pos)
+         --default.begin_growing_sapling(pos)
+      end,
+
+      node_placement_prediction = "",
+      on_place = default.place_sapling,
+})
+
 minetest.register_node("default:mangrove_tree", {
 	description = "Mangrove Tree",
 	tiles ={"default_mangrove_tree_top.png", "default_mangrove_tree_top.png", "default_mangrove_tree.png"},
@@ -296,7 +337,7 @@ minetest.register_node("default:mangrove_leaves", {
 	tiles ={"default_mangrove_leaves.png"},
 	paramtype = "light",
 	is_ground_content = false,
-	groups = {snappy=3,leafdecay=1},
+	groups = {snappy=3,leafdecay=3},
 	waving = 1,
 	drop = {
 		max_items = 1,
@@ -333,7 +374,7 @@ minetest.register_node("default:bush_leaves", {
 	tiles ={"default_bush_leaves.png"},
 	paramtype = "light",
 	is_ground_content = false,
-	groups = {snappy=3,leafdecay=1},
+	groups = {snappy=3,leafdecay=2},
 	waving = 1,
 	drop = {
 		max_items = 1,

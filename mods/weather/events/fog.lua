@@ -1,5 +1,5 @@
 local event = {}
-event.name = "overcast"
+event.name = "fog"
 event.sky = {
 	type = "regular",
 	clouds = true,
@@ -36,16 +36,15 @@ event.stars = {
 	color = "#80FCFEFF"
 }
 event.clouds = {
-    color = "#777985",
-    density = 0.65,
-    height = 300-64,
-    thickness = 64,
+	color = "#FFFFFFD0",
+	density = 1,
+	height = 2.1,
+	thickness = 256,
+	speed = {x=0, z=0}
 }
 event.darken = 1
 event.eventChain = {
-	{"light_clouds",0.05},
-    {"medium_clouds",0.01},
-	{"fog",0.1},
-	{"overcast_light_rain",0.5},
+    {"overcast",0.05},
+    {"overcast_light_rain",0.05}
 }
 weather.register_event(event)
