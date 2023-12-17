@@ -23,9 +23,9 @@ event.sky = {
 	}
 }
 event.eventChain = {
-    {"sprinkle",0.25},
     {"overcast",0.1},
     {"overcast_light_rain",0.2},
+    {"sprinkle",0.25},
 }
 event.darken = 0
 event.particle_delay = 0

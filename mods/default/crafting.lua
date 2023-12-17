@@ -110,6 +110,8 @@ minetest.register_on_player_receive_fields(function(player, form_name, fields)
                             canCraft = false
                         end
                     end
+                else
+                    canCraft = false
                 end
             end
             if not inv:room_for_item("main", ItemStack(recipe.output)) then

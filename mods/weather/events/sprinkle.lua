@@ -23,8 +23,8 @@ event.sky = {
 }
 event.eventChain = {
     {"overcast",0.06},
-    {"medium_clouds",0.5},
     {"light_rain",0.5},
+    {"medium_clouds",0.5},
 }
 event.darken = 0
 event.particle_delay = 0.1
